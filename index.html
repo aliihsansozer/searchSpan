@@ -1,0 +1,69 @@
+<html>
+    <head>
+        <style>
+            span {
+                background-color: yellow;
+            }
+            satir {
+                width: 100%;
+                float: left;
+            }
+        </style>
+    </head>
+    <body>
+        <p>
+            Yaygın inancın tersine, Lorem Ipsum rastgele sözcüklerden oluşmaz. Kökleri M.Ö. 45 tarihinden bu yana klasik Latin edebiyatına kadar uzanan 2000 yıllık bir geçmişi vardır. Virginia'daki Hampden-Sydney College'dan Latince profesörü Richard McClintock, bir Lorem Ipsum pasajında geçen ve anlaşılması en güç sözcüklerden biri olan 'consectetur' sözcüğünün klasik edebiyattaki örneklerini incelediğinde kesin bir kaynağa ulaşmıştır. Lorm Ipsum, Çiçero tarafından M.Ö. 45 tarihinde kaleme alınan "de Finibus Bonorum et Malorum" (İyi ve Kötünün Uç Sınırları) eserinin 1.10.32 ve 1.10.33 sayılı bölümlerinden gelmektedir. Bu kitap, ahlak kuramı üzerine bir tezdir ve Rönesans döneminde çok popüler olmuştur. Lorem Ipsum pasajının ilk satırı olan "Lorem ipsum dolor sit amet" 1.10.32 sayılı bölümdeki bir satırdan gelmektedir.
+        </p>
+        <br>
+        <div class="sonuc">
+
+        </div>
+    </body>
+    <script
+  src="https://code.jquery.com/jquery-3.6.1.min.js"
+  integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+  crossorigin="anonymous"></script>
+    <script>
+        function searchSpan(content,searchKeys){
+            var searchKeyEdit = searchKeys.replace(/ /g, '|');
+            var myRegEx = new RegExp(searchKeyEdit, 'g');
+            let result = content.replace(myRegEx, function (x) {
+                return " <span>"+x+"</span> ";
+            });
+            var summaryArray = result.split(' ');
+            var newsummaryArray = summaryArray.filter(function(v){return v!==''});            
+            console.log(newsummaryArray); 
+            var katsayi = 5;
+            result = "";
+            $.each(newsummaryArray, function( index, value ) {
+                var possition = value.search("<span>");
+                    if(possition != -1){
+                        //Spanı bulduk
+                        //bundan önceki kelimeleri al kat sayı kadar
+                        var oncesi = ""
+                        console.log("kend indexi"+index)
+                        for (let i = index-1; i >= index-katsayi; i--) {
+                            if(i > -1){
+                              if(typeof newsummaryArray[i] != "undefined"){
+                                oncesi = newsummaryArray[i]+" "+oncesi;
+                                }
+                            }
+                        }
+                        var sonrasi = ""
+                        for (let y = index+1; y <= index+katsayi; y++) {
+                                if(typeof newsummaryArray[y] != "undefined"){
+                                    sonrasi+=" "+newsummaryArray[y];
+                                }
+                        }
+                        console.log(oncesi+value+sonrasi);
+                        result+="<div class='satir'>"+oncesi+value+sonrasi+"</div>";
+                    }
+            });
+            return result;
+        }
+
+        //example
+        //TODO:Büyük Harf Küçük Harf Problemi Var Çözülmesi Gereken
+        $(".sonuc").html(searchSpan($("p").text(),"ulaşmıştır Çiçero örnek çok"));
+    </script>
+</html>
